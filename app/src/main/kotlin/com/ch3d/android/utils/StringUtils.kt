@@ -39,17 +39,8 @@ class StringUtils {
          * *
          * @return true if str is null or zero length
          */
-        fun hasNoEmptyValue(vararg str: CharSequence): Boolean {
-            for (sequence in str) {
-                if (isEmpty(sequence)) {
-                    return false
-                }
-            }
-            return true
-        }
+        fun hasNoEmptyValue(vararg str: CharSequence) = str.all { seq -> !isEmpty(seq) }
 
-        fun isEmpty(str: CharSequence?): Boolean {
-            return str == null || str.length == 0
-        }
+        fun isEmpty(str: CharSequence?) = str == null || str.length == 0
     }
 }
