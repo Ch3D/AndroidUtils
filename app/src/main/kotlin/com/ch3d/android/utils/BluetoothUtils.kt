@@ -12,8 +12,7 @@ class BluetoothUtils {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 val bluetoothManager = context.getSystemService(
                         Context.BLUETOOTH_SERVICE) as BluetoothManager
-                val mBluetoothAdapter = bluetoothManager.getAdapter()
-                return mBluetoothAdapter != null && mBluetoothAdapter!!.isEnabled()
+                return bluetoothManager.adapter?.isEnabled ?: false
             } else {
                 return BluetoothAdapter.getDefaultAdapter() != null
             }
