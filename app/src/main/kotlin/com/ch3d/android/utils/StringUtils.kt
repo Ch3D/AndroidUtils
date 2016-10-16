@@ -1,16 +1,7 @@
 package com.ch3d.android.utils
 
-import android.content.Context
-import android.util.TypedValue
-
 class StringUtils {
-
     companion object {
-        fun dpToPx(context: Context, i: Float): Float {
-            val displayMetrics = context.resources.displayMetrics
-            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, displayMetrics)
-        }
-
         val EMPTY_STRING = ""
         val DASH = "-"
         val SPACE = " "
@@ -23,13 +14,15 @@ class StringUtils {
          * @return true - if strings are equal, false - otherwise
          */
         fun hasChanges(newValue: String, oldValue: String): Boolean {
-            if (StringUtils.isEmpty(newValue) && StringUtils.isEmpty(oldValue)) {
+            if (newValue.isEmpty() && oldValue.isEmpty()) {
                 return false
-            } else if (StringUtils.isEmpty(newValue) && !StringUtils.isEmpty(oldValue)) {
+            } else if (newValue.isEmpty() && !oldValue.isEmpty()) {
                 return true
-            } else
-                return !StringUtils.isEmpty(newValue) && StringUtils.isEmpty(
-                        oldValue) || newValue.trim { it <= ' ' } != oldValue.trim { it <= ' ' }
+            } else {
+                val trimPredicate: (Char) -> Boolean = { it <= ' ' }
+                return !newValue.isEmpty() && oldValue.isEmpty()
+                        || newValue.trim(trimPredicate) != oldValue.trim(trimPredicate)
+            }
         }
 
         /**
@@ -39,8 +32,8 @@ class StringUtils {
          * *
          * @return true if str is null or zero length
          */
-        fun hasNoEmptyValue(vararg str: CharSequence) = str.all { seq -> !isEmpty(seq) }
-
-        fun isEmpty(str: CharSequence?) = str == null || str.length == 0
+        fun hasNoEmptyValue(vararg str: CharSequence) = str.all { seq -> !seq.isEmpty() }
     }
+
+    fun CharSequence?.isEmpty() = this == null || length == 0
 }
