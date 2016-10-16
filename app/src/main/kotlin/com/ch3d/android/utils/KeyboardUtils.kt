@@ -12,19 +12,11 @@ class KeyboardUtils {
             imm.hideSoftInputFromWindow(windowToken, 0)
         }
 
-        fun showKeyboard(context: Context?, view: View?) {
-            if (context == null || view == null) {
-                // skip
-                return
-            }
+        fun hideKeyboard(context: Context, view: View) = hideKeyboard(context, view.windowToken)
+
+        fun showKeyboard(context: Context, view: View) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-        }
-
-        fun hideKeyboard(context: Context, view: View?) {
-            if (view != null) {
-                hideKeyboard(context, view.windowToken)
-            }
         }
     }
 }
