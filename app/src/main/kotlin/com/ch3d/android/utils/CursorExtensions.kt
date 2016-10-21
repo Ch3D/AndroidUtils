@@ -1,9 +1,15 @@
 package com.ch3d.android.utils
 
 import android.database.Cursor
+import com.ch3d.android.utils.functions.Func1
+import java.util.*
 
-fun Cursor.getLong(colName: String): Long = getLong(getColumnIndex(colName))
+fun <T> Cursor.mapList(mapper: Func1<Cursor, T>): List<T> {
+    val list = ArrayList<T>(count)
+    while (moveToNext()) {
+        list.add(mapper.call(this))
+    }
+    return list
+}
 
-fun Cursor.getInt(colName: String): Int = getInt(getColumnIndex(colName))
-
-fun Cursor.getString(colName: String): String = getString(getColumnIndex(colName))
+fun <T> Cursor.map(mapper: Func1<Cursor, T>): T = mapper.call(this)
